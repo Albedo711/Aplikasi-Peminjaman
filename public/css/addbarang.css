@@ -1,0 +1,136 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Background Warna Lembut */
+body {
+    background-color: #f7f9fc;
+    color: #333;
+}
+
+/* Tombol Back */
+/* Back Button Container */
+.back-container {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 15px;
+}
+
+/* Tombol Back */
+.back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+}
+
+.back-button:hover {
+    background-color: #fff;
+    color: #007bff;
+}
+
+
+/* Container Utama */
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Card Styling */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Form Label */
+label {
+    font-weight: bold;
+    color: #4a5568;
+}
+
+/* Input Form */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Select */
+select.form-control {
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Button Styles */
+button[type="submit"],
+button[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+button[type="reset"] {
+    background-color: #ffc107;
+    color: white;
+    margin-left: 10px;
+}
+
+button[type="reset"]:hover {
+    background-color: #e0a800;
+    color: white;
+}
+
+/* Alert Error */
+.alert-danger {
+    background-color: #ff6b6b;
+    color: white;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+}

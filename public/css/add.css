@@ -1,0 +1,90 @@
+body {
+    background-color: #4A33D1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+header a button {
+    background-color: #5B42F3;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px #412cb7;
+}
+
+header a button:hover {
+    background-color: #ffffff;
+    color: #4A33D1;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+.card {
+    width: 300px;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.coolinput label.text {
+    font-size: 0.9rem;
+    color: #4A33D1;
+    margin-bottom: 5px;
+}
+
+.coolinput input[type=text].input {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    border: 2px solid #5B42F3;
+    border-radius: 8px;
+    background: transparent;
+    color: #4A33D1;
+}
+
+.coolinput input[type=text].input:focus {
+    outline: none;
+    border-color: #7c69fc;
+}
+
+.coolinput button {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #5B42F3;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.coolinput button:hover {
+    background-color: #4A33D1;
+}
