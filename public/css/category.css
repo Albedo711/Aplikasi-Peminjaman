@@ -114,22 +114,22 @@
     }
 
     .btn-edit {
-        background-color: #4CAF50;
+        background-color: #0037ff;
         color: white;
     }
 
     .btn-edit:hover {
-        background-color: #45a049;
+        cursor: pointer;
     }
     
 
     .btn-delete {
-        background-color: #f44336;
+        background-color: #0037ff;
         color: white;
     }
 
     .btn-delete:hover {
-        background-color: #e53935;
+      cursor: pointer;
     }
   
   .Button-suki {
@@ -257,4 +257,6 @@
   .sidebar-icon:hover iconify-icon {
     color: white;
   }
+
+  
   

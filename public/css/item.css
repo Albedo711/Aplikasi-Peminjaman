@@ -75,22 +75,22 @@
     }
 
     .btn-edit {
-        background-color: #fdcf00;
+        background-color: #0037ff;
         color: white;
     }
 
     .btn-edit:hover {
-        background-color: #fdcf00;
+        cursor: pointer;
     }
     
 
     .btn-delete {
-        background-color: #f44336;
+        background-color: #0037ff;
         color: white;
     }
 
     .btn-delete:hover {
-        background-color: #e53935;
+      cursor: pointer;
     }
   
   .main {
@@ -208,7 +208,7 @@
 .card {
   position: relative;
   width: 12em;
-  height: 16.5em;
+  height: 20em;
   box-shadow: 0px 1px 13px rgba(0, 0, 0, 0.1);
   background: #fff;
   padding: 0.5em;
@@ -273,7 +273,10 @@
 .price {
   font-size: 0.9em;
   color: #0037ff;
-
+  
+}
+.detail{
+  text-decoration: none;
 }
 
 .button{
@@ -282,32 +285,14 @@
 
   padding: 10px;
   border: none;
-  background-color: #0037ff;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-/* .pinjam-button {
-  width: 90%;
-  padding: 10px;
-  border: none;
-  background-color: #0037ff;
-  color: white;
+  background-color: #ffffff;
+  color: #0037ff;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.pinjam-button:hover {
-  background-color: #002bb5;
-}
-
-.pinjam-button:active {
-  transform: scale(0.98);
-} */
 
 
 .latest {
@@ -373,9 +358,9 @@
 
   .custom-select {
     width: 150px;
-    white-space: nowrap;      /* Hindari baris baru */
-  overflow: hidden;         /* Sembunyikan teks yang kelebihan */
-  text-overflow: ellipsis;  /* Tambahkan ... */
+    white-space: nowrap;     
+  overflow: hidden;         
+  text-overflow: ellipsis;  
   max-width: 100%;
     height: 40px;
     padding: 10px 15px;
@@ -397,10 +382,14 @@
     outline: none;
   }
   
-  
- 
-  
-  
+.containerwle{ 
+    display: flex;
+    justify-content: flex-start;  
+    align-items: flex-start;
+    gap: 1rem;  
+    flex-wrap: wrap;  
+}
+
   
   
   .sidebar-icon {
@@ -413,7 +402,7 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow default */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .sidebar-icon iconify-icon {
@@ -424,7 +413,7 @@
   
   .sidebar-icon:hover {
     background-color: #2b4ec8;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Lebih besar saat hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
     transform: scale(1.1);
   }
   

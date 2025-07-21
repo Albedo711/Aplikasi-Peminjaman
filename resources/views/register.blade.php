@@ -56,9 +56,11 @@
 
           <label for="jurusan">Pilih Jurusan</label>
           <select id="jurusan" name="jurusan" class="enum-select">
-            <option value="PPLG">PPLG</option>
-            <option value="TJKT">TJKT</option>
+            <option value="RPL">RPL</option>
+            <option value="PSPT">PSPT</option>
             <option value="Animasi">Animasi</option>
+            <option value="TJKT">TJKT</option>
+            <option value="TE">TE</option>
           </select>
         </div>
         

@@ -18,8 +18,8 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'password' => 'required|string',
             'role' => 'required|string|in:admin,user',
-            'kelas' => 'required_if:role,user|string|max:255', 
-            'jurusan' => 'required_if:role,user|string|max:255', 
+            'kelas' => 'required_if:role,user|string|in:X,XI,XII', 
+            'jurusan' => 'required_if:role,user|string|in:RPL,PSPT,ANIMASI,TJKT,TE', 
         ]);
 
         $user = new User();

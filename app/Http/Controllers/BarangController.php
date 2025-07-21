@@ -16,6 +16,10 @@ class BarangController extends Controller
         return view('Barang', compact('barang', 'categories'));
     }
 
+    public function show($id){
+        $item = Barang::findOrFail($id);
+        return view('detailbarang',compact('item'));
+    }
  
     public function create()
     {
@@ -24,37 +28,37 @@ class BarangController extends Controller
     }
 
   
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_kategori' => 'required|exists:categories,id',
-            'nama_barang' => 'required|max:300',
-            'foto_barang' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'deskripsi' => 'required',
-            'stok' => 'required|integer',
-            'brand' => 'required|max:300',
-            'status' => 'required|in:Tersedia,Dipinjam',
-        ]);
-  
-    
-        $fileName = null;
-        if ($request->hasFile('foto_barang')) {
-    $fileName = $request->file('foto_barang')->store('barang', 'public');
-}
+   public function store(Request $request)
+{
+    $request->validate([
+        'id_kategori' => 'required|exists:categories,id',
+        'nama_barang' => 'required|max:300',
+        'foto_barang' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'deskripsi' => 'required',
+        'stok' => 'required|integer',
+        'brand' => 'required|max:300',
+    ]);
 
-        
-        Barang::create([
-            'id_kategori' => $request->id_kategori,
-            'nama_barang' => $request->nama_barang,
-            'foto_barang' => $fileName,
-            'deskripsi' => $request->deskripsi,
-            'stok' => $request->stok,
-            'brand' => $request->brand,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('index')->with('success', 'Barang berhasil ditambahkan.');
+    $fileName = null;
+    if ($request->hasFile('foto_barang')) {
+        $fileName = $request->file('foto_barang')->store('barang', 'public');
     }
+
+    // Logika status otomatis
+    $status = $request->stok == 0 ? 'Dipinjam' : 'Tersedia';
+
+    Barang::create([
+        'id_kategori' => $request->id_kategori,
+        'nama_barang' => $request->nama_barang,
+        'foto_barang' => $fileName,
+        'deskripsi' => $request->deskripsi,
+        'stok' => $request->stok,
+        'brand' => $request->brand,
+        'status' => $status,
+    ]);
+
+    return redirect()->route('index')->with('success', 'Barang berhasil ditambahkan.');
+}
 
     
     public function edit($id)
@@ -65,28 +69,37 @@ class BarangController extends Controller
     }
 
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nama_barang' => 'required|max:300',
-            'stok' => 'required|integer',
-            'brand' => 'nullable|max:300',
-            'status' => 'required|in:Tersedia,Dipinjam',
-        ]);
+   public function update(Request $request, $id)
+{
+    $request->validate([
+        'nama_barang' => 'required|max:300',
+        'stok' => 'required|integer',
+        'brand' => 'nullable|max:300',
+        'foto_barang' => 'nullable|image|mimes:jpg,jpeg,png'
+    ]);
 
-        $barang = Barang::findOrFail($id);
+    $barang = Barang::findOrFail($id);
 
-
-        if ($request->hasFile('foto_barang')) {
-            $fileName = time() . '.' . $request->foto_barang->extension();
-            $request->foto_barang->move(public_path('images'), $fileName);
-            $barang->foto_barang = $fileName;
-        }
-
-        $barang->update($request->all());
-
-        return redirect()->route('index')->with('success', 'Barang berhasil diupdate.');
+    if ($request->hasFile('foto_barang')) {
+        $fileName = time() . '.' . $request->foto_barang->extension();
+        $request->foto_barang->move(public_path('images'), $fileName);
+        $barang->foto_barang = $fileName;
     }
+
+    // Perbarui data
+    $barang->nama_barang = $request->nama_barang;
+    $barang->stok = $request->stok;
+    $barang->brand = $request->brand;
+
+    // Logika status otomatis
+    $barang->status = $request->stok == 0 ? 'Dipinjam' : 'Tersedia';
+
+    $barang->save();
+
+    return redirect()->route('index')->with('success', 'Barang berhasil diupdate.');
+}
+
+
 
  
     public function destroy($id)

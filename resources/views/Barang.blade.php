@@ -27,6 +27,9 @@
   <a href="pengembalian">
     <div class="sidebar-icon"><iconify-icon icon="mdi:arrow-down-bold-circle"></iconify-icon></div>
   </a>
+  <a href="user">
+    <div class="sidebar-icon"><iconify-icon icon="mdi:person"></iconify-icon></div>
+  </a>
 </aside>
 
 
@@ -75,6 +78,8 @@
       <div class="suki">
       <section class="latest">
       @foreach ($barang as $item)
+      <div class="containerwle">
+      <a class="detail" href="{{ route('barang.show', $item->id_barang) }}">
 <div class="card" data-nama="{{ $item->nama_barang }}">
     <div class="image">
         <img src="{{ Storage::url($item->foto_barang) }}" alt="{{ $item->nama_barang }}">
@@ -86,7 +91,7 @@
     
     <div class="card-button">
 <a href="{{ route('barang.edit', $item->id_barang) }}"><button class="btn-edit">Edit</button></a>
-      <form action="{{ route('destroy', $item->id_barang) }}" method="POST" style="display: inline-block;">
+      <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" style="display: inline-block;">
                     @csrf
                     @method('DELETE')
                     <button class="btn-delete" type="submit" onclick="return confirm('Yakin ingin menghapus Barang ini?')">
@@ -94,6 +99,8 @@
                     </button>
                   </form>
     </div>
+</div>
+</a>
 </div>
 @endforeach
       </section>

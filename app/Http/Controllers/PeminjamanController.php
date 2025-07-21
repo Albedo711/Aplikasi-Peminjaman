@@ -8,6 +8,7 @@ use App\Models\DetailPeminjaman;
 use App\Models\Peminjaman;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class PeminjamanController extends Controller
@@ -15,10 +16,55 @@ class PeminjamanController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function suki()
+{
+    $userId = auth()->id();
+
+    $peminjaman = Peminjaman::with('detailPeminjaman.barang')
+        ->whereHas('detailPeminjaman', function ($query) use ($userId) {
+            $query->where('id_user', $userId);
+        })
+        ->get();
+
+    if ($peminjaman->isEmpty()) {
+        return response()->json([
+            'status' => 'empty',
+            'message' => 'Belum ada peminjaman',
+            'data' => []
+        ]);
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Data peminjaman berhasil diambil',
+        'data' => $peminjaman
+    ]);
+}
+
+
+public function detail()
+    {
+        // Mengambil semua detail peminjaman dengan relasi barang dan pengembalian
+        $detailPeminjaman = DetailPeminjaman::with(['barang', 'pengembalian'])->get();
+
+        // Bisa juga kamu filter sesuai kebutuhan, misalnya hanya yang belum dikembalikan:
+        $detailPeminjaman = DetailPeminjaman::with(['barang', 'pengembalian'])
+           ->whereDoesntHave('pengembalian')
+           ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $detailPeminjaman
+        ]);
+    }
+
+
+
     public function index()
     {
        
-        $peminjaman = Peminjaman::with('user', 'detailPeminjaman.barang')->get();
+        $peminjaman = Peminjaman::with('detailPeminjaman.user', 'detailPeminjaman.barang')->get();
         return view('peminjaman', compact('peminjaman'));
     }
 
@@ -53,12 +99,13 @@ class PeminjamanController extends Controller
     {
         $validator = Validator::make($request->all(),[
             //peminjaman
-            'id_user'   => 'required|exists:users,id_user',
+            
             'waktu_tenggat' => 'required|date',
             'tanggal_pinjam' => 'required|date',
             'keterangan'    => 'required|string|max:300',
  
             //detail peminjaman
+            'id_user'   => 'required|exists:users,id_user',
             'id_barang' => 'required|exists:barang,id_barang',
             'jumlah' => 'required|integer|min:1',
         ]);
@@ -73,7 +120,7 @@ class PeminjamanController extends Controller
             ], 400);
         }
         $peminjaman = Peminjaman::create(array_merge(
-        $request->only('id_user', 'waktu_tenggat', 'tanggal_pinjam', 'keterangan'),
+        $request->only('waktu_tenggat', 'tanggal_pinjam', 'keterangan'),
         ['status' => 'ditinjau']  
         ));
 
@@ -81,6 +128,7 @@ class PeminjamanController extends Controller
             'id_peminjaman' => $peminjaman->id,
             'id_barang' => $request->id_barang,
             'jumlah' => $request->jumlah,
+            'id_user' => $request->id_user
            
 
         ]);

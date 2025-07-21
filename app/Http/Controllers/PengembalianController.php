@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPeminjaman;
 use App\Models\Pengembalian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,9 +12,66 @@ class PengembalianController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
+ public function suki()
+{
+    $userId = auth()->id();
+
+    $pengembalian = Pengembalian::with([
+        'detailPeminjaman.user',
+        'detailPeminjaman.barang'
+    ])
+    ->whereHas('detailPeminjaman.peminjaman', function ($query) use ($userId) {
+        $query->where('id_user', $userId);
+    })
+    ->get();
+
+    if ($pengembalian->isEmpty()) {
+        return response()->json([
+            'status' => 'empty',
+            'message' => 'Belum ada pengembalian',
+            'data' => []
+        ]);
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Data peminjaman berhasil diambil',
+        'data' => $pengembalian
+    ]);
+}
+
+public function barangBelumDikembalikan()
+{
+    $userId = auth()->id();
+
+    $data = DetailPeminjaman::with(['barang', 'peminjaman'])
+        ->whereHas('peminjaman', function ($query) use ($userId) {
+            $query->where('id_user', $userId)
+                  ->where('status', 'Diterima'); 
+        })
+        ->whereDoesntHave('pengembalian') 
+        ->get();
+
+    if ($data->isEmpty()) {
+        return response()->json([
+            'status' => 'empty',
+            'message' => 'Tidak ada barang yang sedang dipinjam',
+            'data' => []
+        ]);
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Daftar barang yang belum dikembalikan',
+        'data' => $data
+    ]);
+}
+
    public function index()
 {
-     $pengembalian = Pengembalian::with('detailPeminjaman.peminjaman.user','detailPeminjaman.barang')->get();
+     $pengembalian = Pengembalian::with('detailPeminjaman.user','detailPeminjaman.barang')->get();
         
     
     return view('pengembalian', compact('pengembalian'));
@@ -50,20 +108,17 @@ public function terima($id){
     {
        $validator = Validator::make($request->all(), [
     'id_detail_peminjaman'   => 'required|exists:detail_peminjaman,id',
-    'foto'                   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    'foto'                   => 'required|image|mimes:jpeg,png,jpg,gif',
     'tanggal_dikembalikan'   => 'required|date',
     'keterangan'             => 'nullable|string|max:255',
 ]);
 
-        if($validator->fails()){
-            return response()->json([
-                 'error' => [
-                    'message' => [
-                        'bad request'
-                    ]
-                ]
-                    ], 400);
-        }
+        if ($validator->fails()) {
+    return response()->json([
+        'error' => $validator->errors()
+    ], 400);
+}
+
 
         $data = $request->except('status');
         $data['status'] = 'Ditinjau'; 

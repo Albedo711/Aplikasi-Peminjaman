@@ -37,7 +37,7 @@
 
     <main class="main">
       <header class="header">
-        <h1>CATEGORY</h1>
+        <h1>USERS</h1>
         
         @if(session('success'))
         <div class="alert alert-success">
@@ -61,42 +61,42 @@
       
       <section class="suki">
         <div class="button-wrapper">
-          <a href="addcategory"><button class="Button-suki">ADD</button></a>
+          <a href="{{ route('user.create') }}"><button class="Button-suki">ADD</button></a>
         </div>
         <section class="latest">
-        <h3>List - Category</h3>
+        <h3>List - Users</h3>
         <div class="table-responsive">
           <table id="myTable" class="display">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nama Category</th>
+                <th>Nama Users</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($categories as $category)
-              <tr>
-                <td>{{ $category->id }}</td>
-                <td>{{ $category->name }}</td>
-                <td>
-                  @if(auth()->check() && auth()->user()->role === 'admin')
-                  <a href="{{ route('category.edit', $category->id) }}">
-                    <button class="btn-edit">Edit</button>
-                  </a>
-                  
+              @foreach ($user as $list)
+  <tr>
+    <td>{{ $list->id_user }}</td>
+    <td>{{ $list->name }}</td>
+    <td>
+      
+        <a href="{{ route('user.edit', $list->id_user) }}">
+          <button class="btn-edit">Edit</button>
+        </a>
 
-                  <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" onclick="return confirm('Yakin ingin menghapus kategori ini?')" class="btn-delete">
-                      Hapus
-                    </button>
-                  </form>
-                  @endif
-                </td>
-              </tr>
-              @endforeach
+        <form action="{{ route('user.destroy',$list->id_user) }}" method="POST" style="display: inline-block">
+          @csrf
+          @method('DELETE')
+          <button type="submit" onclick="return confirm('Yakin ingin menghapus pengguna ini?')" class="btn-delete">
+            Hapus
+          </button>
+        </form>
+      
+    </td>
+  </tr>
+@endforeach
+
             </tbody>
           </table>
         </div>

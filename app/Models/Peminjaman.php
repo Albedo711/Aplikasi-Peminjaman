@@ -11,7 +11,6 @@ class Peminjaman extends Model
     protected $primaryKey = 'id';
    protected $table = 'peminjaman';
     protected $fillable = [
-        'id_user',
         'waktu_tenggat',
         'tanggal_pinjam',
         'keterangan',
@@ -22,10 +21,7 @@ class Peminjaman extends Model
         'status' => 'Ditinjau',
     ];
 
-   public function user()
-{
-    return $this->belongsTo(User::class, 'id_user', 'id_user');
-}
+ 
 
 
     public function detailpeminjaman(){

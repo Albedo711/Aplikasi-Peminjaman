@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\userController;
 use App\Models\Pengembalian;
 
 /*
@@ -37,8 +38,19 @@ Route::get('barang', [BarangController::class, 'index'])->middleware('auth')->na
 Route::get('create', [BarangController::class, 'create'])->middleware('auth')->name('create');
 Route::post('store', [BarangController::class, 'store'])->middleware('auth')->name('store');
 Route::get('barang/{id}/edit', [BarangController::class, 'edit'])->middleware('auth')->name('barang.edit');
-Route::put('update/{id}', [BarangController::class, 'update'])->middleware('auth')->name('barang.update');
-Route::delete('destroy/{id}', [BarangController::class, 'destroy'])->middleware('auth')->name('destroy');
+Route::put('barang/{id}', [BarangController::class, 'update'])->middleware('auth')->name('barang.update');
+Route::delete('barang/{id}', [BarangController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('barang.destroy'); 
+Route::get('/barang/{id}', [BarangController::class, 'show'])->name('barang.show');
+
+Route::get('user', [userController::class, 'index'])->middleware('auth')->name('user');
+Route::get('user/create', [userController::class, 'create'])->middleware('auth')->name('user.create');
+Route::post('user/store', [userController::class, 'store'])->middleware('auth')->name('user.store');
+Route::get('user/{id}/edit', [userController::class, 'edit'])->middleware('auth')->name('user.edit');
+Route::put('update/{id}', [userController::class, 'update'])->middleware('auth')->name('user.update');
+Route::delete('destroy/{id}', [userController::class, 'destroy'])->middleware('auth')->name('user.destroy');
+
 
 
 
@@ -64,4 +76,39 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
+
+
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+
+Route::get('/image/barang/{filename}', function ($filename) {
+    $path = 'public/barang/' . $filename;
+
+    if (!Storage::exists($path)) {
+        abort(404);
+    }
+
+    $file = Storage::get($path);
+    $mime = Storage::mimeType($path);
+
+    return Response::make($file, 200, [
+        'Content-Type' => $mime,
+        'Access-Control-Allow-Origin' => '*',
+    ]);
+});
+
+Route::get('/image/foto_barang/{filename}', function ($filename) {
+    $path = storage_path('app/public/foto_barang/' . $filename);
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    $file = file_get_contents($path);
+    $mime = mime_content_type($path);
+
+    return response($file, 200)
+          ->header('Content-Type', $mime)
+          ->header('Access-Control-Allow-Origin', '*');
+});
 

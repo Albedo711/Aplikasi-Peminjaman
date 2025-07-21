@@ -27,6 +27,9 @@
   <a href="pengembalian">
     <div class="sidebar-icon"><iconify-icon icon="mdi:arrow-down-bold-circle"></iconify-icon></div>
   </a>
+  <a href="user">
+    <div class="sidebar-icon"><iconify-icon icon="mdi:person"></iconify-icon></div>
+  </a>
 </aside>
 
 
@@ -67,23 +70,7 @@
         </div>
       </section>
 
-      <section class="latest">
-        <h3>Peminjam terbaru</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nama</th>
-              <th>Barang</th>
-              <th>Jumlah</th>
-              <th>Tanggal pinjam</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-          </tbody>
-        </table>
-      </section>
+      
       </section>
       
     </main>

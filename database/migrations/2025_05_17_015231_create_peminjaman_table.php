@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->datetime('waktu_tenggat');
             $table->datetime('tanggal_pinjam');
             $table->string('keterangan', 300);

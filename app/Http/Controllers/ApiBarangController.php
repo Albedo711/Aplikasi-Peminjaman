@@ -12,15 +12,14 @@ class ApiBarangController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $categories = Category::all();
-        $barang = Barang::all(); 
+{
+    $barang = Barang::with('category')->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $barang
-        ], 200);
-    }
+    return response()->json([
+        'success' => true,
+        'data' => $barang
+    ], 200);
+}
 
     /**
      * Show the form for creating a new resource.
